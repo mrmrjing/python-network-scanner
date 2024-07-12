@@ -15,7 +15,7 @@ This Python Network Scanner allows users to scan specified IP ranges and port ra
 ### Setup
 1. Clone the Repository (if applicable):
 
-git clone https://your-repository-url
+git clone https://github.com/mrmrjing/python-network-scanner.git
 cd network-scanner
 
 
