@@ -1,6 +1,6 @@
 [
     {
-        "host": "192.168.10.1",
+        "ip": "192.168.10.1",
         "hostname": "Linksys01882",
         "state": "up",
         "protocols": {
@@ -21,50 +21,13 @@
         }
     },
     {
-        "host": "192.168.10.140",
+        "ip": "192.168.10.140",
         "hostname": "",
         "state": "up",
         "protocols": {}
     },
     {
-        "host": "192.168.10.168",
-        "hostname": "Galaxy-Tab-S6-Lite",
-        "state": "up",
-        "protocols": {
-            "tcp": [
-                {
-                    "port": 795,
-                    "state": "filtered"
-                },
-                {
-                    "port": 804,
-                    "state": "filtered"
-                },
-                {
-                    "port": 967,
-                    "state": "filtered"
-                },
-                {
-                    "port": 594,
-                    "state": "filtered"
-                },
-                {
-                    "port": 670,
-                    "state": "filtered"
-                },
-                {
-                    "port": 708,
-                    "state": "filtered"
-                },
-                {
-                    "port": 709,
-                    "state": "filtered"
-                }
-            ]
-        }
-    },
-    {
-        "host": "192.168.10.184",
+        "ip": "192.168.10.184",
         "hostname": "",
         "state": "up",
         "protocols": {
@@ -81,15 +44,105 @@
         }
     },
     {
-        "host": "192.168.10.186",
+        "ip": "192.168.10.186",
         "hostname": "Hway-bin-s-S22-Ultra",
+        "state": "up",
+        "protocols": {
+            "tcp": [
+                {
+                    "port": 825,
+                    "state": "filtered"
+                },
+                {
+                    "port": 881,
+                    "state": "filtered"
+                },
+                {
+                    "port": 896,
+                    "state": "filtered"
+                },
+                {
+                    "port": 233,
+                    "state": "filtered"
+                },
+                {
+                    "port": 250,
+                    "state": "filtered"
+                },
+                {
+                    "port": 49,
+                    "state": "filtered"
+                },
+                {
+                    "port": 60,
+                    "state": "filtered"
+                },
+                {
+                    "port": 62,
+                    "state": "filtered"
+                },
+                {
+                    "port": 82,
+                    "state": "filtered"
+                },
+                {
+                    "port": 522,
+                    "state": "filtered"
+                },
+                {
+                    "port": 541,
+                    "state": "filtered"
+                },
+                {
+                    "port": 592,
+                    "state": "filtered"
+                },
+                {
+                    "port": 974,
+                    "state": "filtered"
+                },
+                {
+                    "port": 1004,
+                    "state": "filtered"
+                },
+                {
+                    "port": 476,
+                    "state": "filtered"
+                }
+            ]
+        }
+    },
+    {
+        "ip": "192.168.10.235",
+        "hostname": "Hongs-Air-2",
         "state": "up",
         "protocols": {}
     },
     {
-        "host": "192.168.10.235",
-        "hostname": "Hongs-Air-2",
+        "ip": "192.168.10.60",
+        "hostname": "Hongs-Air",
         "state": "up",
         "protocols": {}
+    },
+    {
+        "ip": "192.168.10.168",
+        "hostname": "Galaxy-Tab-S6-Lite",
+        "state": "up",
+        "protocols": {
+            "tcp": [
+                {
+                    "port": 944,
+                    "state": "filtered"
+                },
+                {
+                    "port": 978,
+                    "state": "filtered"
+                },
+                {
+                    "port": 614,
+                    "state": "filtered"
+                }
+            ]
+        }
     }
 ]
