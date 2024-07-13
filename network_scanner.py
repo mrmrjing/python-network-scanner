@@ -44,14 +44,15 @@ async def main():
     parser = argparse.ArgumentParser(description="Async Network Scanner Tool")
     parser.add_argument('--ip', required=True, help='IP range to scan, e.g., 192.168.10.0/24')
     parser.add_argument('--start_port', type=int, default=1, help='Start of the port range')
-    parser.add_argument('--end_port', type=int, default=1024, help='End of the port range')
+    parser.add_argument('--end_port', type=int, default=65535, help='End of the port range')
     args = parser.parse_args()
 
     results = {}
     tasks = []
 
-    task_count = 10  # Example: Split the port range into 10 parts
-    ports_per_task = (args.end_port - args.start_port + 1) // task_count
+    total_ports = args.end_port - args.start_port + 1
+    task_count = min(100, total_ports)  # Controls the number of concurrent tasks
+    ports_per_task = total_ports // task_count
 
     for i in range(task_count):
         start = args.start_port + i * ports_per_task
