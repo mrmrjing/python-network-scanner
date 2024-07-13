@@ -1,1 +1,95 @@
-[]
+[
+    {
+        "host": "192.168.10.1",
+        "hostname": "Linksys01882",
+        "state": "up",
+        "protocols": {
+            "tcp": [
+                {
+                    "port": 53,
+                    "state": "open"
+                },
+                {
+                    "port": 80,
+                    "state": "open"
+                },
+                {
+                    "port": 443,
+                    "state": "open"
+                }
+            ]
+        }
+    },
+    {
+        "host": "192.168.10.140",
+        "hostname": "",
+        "state": "up",
+        "protocols": {}
+    },
+    {
+        "host": "192.168.10.168",
+        "hostname": "Galaxy-Tab-S6-Lite",
+        "state": "up",
+        "protocols": {
+            "tcp": [
+                {
+                    "port": 795,
+                    "state": "filtered"
+                },
+                {
+                    "port": 804,
+                    "state": "filtered"
+                },
+                {
+                    "port": 967,
+                    "state": "filtered"
+                },
+                {
+                    "port": 594,
+                    "state": "filtered"
+                },
+                {
+                    "port": 670,
+                    "state": "filtered"
+                },
+                {
+                    "port": 708,
+                    "state": "filtered"
+                },
+                {
+                    "port": 709,
+                    "state": "filtered"
+                }
+            ]
+        }
+    },
+    {
+        "host": "192.168.10.184",
+        "hostname": "",
+        "state": "up",
+        "protocols": {
+            "tcp": [
+                {
+                    "port": 80,
+                    "state": "open"
+                },
+                {
+                    "port": 443,
+                    "state": "open"
+                }
+            ]
+        }
+    },
+    {
+        "host": "192.168.10.186",
+        "hostname": "Hway-bin-s-S22-Ultra",
+        "state": "up",
+        "protocols": {}
+    },
+    {
+        "host": "192.168.10.235",
+        "hostname": "Hongs-Air-2",
+        "state": "up",
+        "protocols": {}
+    }
+]

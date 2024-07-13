@@ -2,13 +2,23 @@ import nmap
 import json
 import threading
 from concurrent.futures import ThreadPoolExecutor
+import argparse
+import logging
 
-lock = threading.Lock()
+# Set up basic configuration for logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-def scan_ports(ip_range, port_start, port_end, results):
-    print(f"Starting scan for {ip_range} on ports {port_start}-{port_end}...")
+def scan_ports(ip_range, port_start, port_end, results, lock):
+    logging.info(f"Starting scan for {ip_range} on ports {port_start}-{port_end}")
     nm = nmap.PortScanner()
-    nm.scan(hosts=ip_range, arguments=f'-p {port_start}-{port_end}')
+    try:
+        nm.scan(hosts=ip_range, arguments=f'-p {port_start}-{port_end}')
+    except nmap.PortScannerError as e:
+        logging.error(f"Scan failed: {e}")
+        return
+    except Exception as e:
+        logging.error(f"Unexpected error: {e}")
+        return
 
     for host in nm.all_hosts():
         host_info = {
@@ -25,46 +35,46 @@ def scan_ports(ip_range, port_start, port_end, results):
                     'state': nm[host][proto][port]['state']
                 })
             host_info['protocols'][proto] = ports_info
-
+        
+        # Lock the results list only when necessary
         with lock:
-            # Check if the host is already in the results to prevent duplicates
-            if not any(res['host'] == host for res in results):
+            existing = next((r for r in results if r['host'] == host), None)
+            if existing:
+                for proto, ports in host_info['protocols'].items():
+                    if proto in existing['protocols']:
+                        existing['protocols'][proto].extend(ports)
+                    else:
+                        existing['protocols'][proto] = ports
+            else:
                 results.append(host_info)
 
-def write_results_to_file(results):
-    with open('scan_results.json', 'w') as file:
+def write_results_to_file(results, filename):
+    with open(filename, 'w') as file:
         json.dump(results, file, indent=4)
 
-def remove_duplicates(results):
-    unique_results = []
-    seen_hosts = set()
-    for result in results:
-        if result['host'] not in seen_hosts:
-            unique_results.append(result)
-            seen_hosts.add(result['host'])
-    return unique_results
-
 def main():
-    ip_range = input("Enter the IP range to scan (e.g., 192.168.10.0/24): ")
-    port_start = 1
-    port_end = 1024
-    num_threads = 4
-    results = []
+    parser = argparse.ArgumentParser(description="Network Scanner Tool")
+    parser.add_argument('--ip', required=True, help='IP range to scan, e.g., 192.168.10.0/24')
+    parser.add_argument('--start_port', type=int, default=1, help='Start of the port range')
+    parser.add_argument('--end_port', type=int, default=1024, help='End of the port range')
+    parser.add_argument('--threads', type=int, default=4, help='Number of threads to use')
+    parser.add_argument('--output', type=str, default='scan_results.json', help='Output file name')
+    args = parser.parse_args()
 
-    ports_per_thread = (port_end - port_start + 1) // num_threads
-    with ThreadPoolExecutor(max_workers=num_threads) as executor:
+    results = []
+    lock = threading.Lock()
+    ports_per_thread = (args.end_port - args.start_port + 1) // args.threads
+    with ThreadPoolExecutor(max_workers=args.threads) as executor:
         futures = []
-        for i in range(num_threads):
-            start = port_start + i * ports_per_thread
-            end = start + ports_per_thread - 1 if i < num_threads - 1 else port_end
-            futures.append(executor.submit(scan_ports, ip_range, start, end, results))
+        for i in range(args.threads):
+            start = args.start_port + i * ports_per_thread
+            end = start + ports_per_thread - 1 if i < args.threads - 1 else args.end_port
+            futures.append(executor.submit(scan_ports, args.ip, start, end, results, lock))
         for future in futures:
             future.result()
 
-    # Remove duplicates after all threads are done
-    clean_results = remove_duplicates(results)
-    write_results_to_file(clean_results)
-    print("Network scan completed successfully and results logged to JSON file.")
+    write_results_to_file(results, args.output)
+    logging.info("Network scan completed successfully. Results have been saved to %s", args.output)
 
 if __name__ == "__main__":
     main()
